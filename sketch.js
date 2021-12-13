@@ -5,8 +5,9 @@ const Body = Matter.Body;
 
 let engine;
 let world;
-var ball;
 var ground;
+
+var rock,ball,qua;
 
 function preload(){
 	
@@ -14,24 +15,32 @@ function preload(){
 
 function setup() {
 	createCanvas(800, 700);
+	engine = Engine.create();
+	world = engine.world;
 
 	var Edge_options={
 		isStatic: true
 	  };
+
+	  var qua_options = {
+		restitution:0.05,
+		fiction:0.02,
+		frictionAir:0  
+	  }
 
 	  var ground_options ={
 		isStatic: true
 	  };
 
 	 rock_options={
-		restitution:0.85
+		restitution:0.85,
+		fiction:0.01,
+		frictionAir:0.01
 	  }
-	engine = Engine.create();
-	world = engine.world;
-
-	//Crie os Corpos Aqui.
+	
 	 ball_options = {
 		restitution: 0.95,
+		friction:1,
 		frictionAir:0.01
 	  }
 	   
@@ -49,6 +58,9 @@ function setup() {
 	rock=Bodies.circle(300,20,10,rock_options);
   	World.add(world,rock);
 
+	qua = Bodies.rectangle(100,10,20,qua_options);
+	World.add(world,qua);
+
 	rectMode(CENTER);
   	ellipseMode(RADIUS);
 }
@@ -63,9 +75,8 @@ function draw() {
 
   rect(rock.position.x,rock.position.y,40);
 
+  rect(qua.position.x,qua.position.y,50);
+
   drawSprites();
  
 }
-
-
-
